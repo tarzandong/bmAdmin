@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="whitePage">
     <el-row>
       <el-col :span='6' class='mt' >
         <div class="contentTitle">商品类别列表</div>
@@ -43,11 +43,13 @@
           <template #default="scope">
             <el-button
               size="mini"
-              @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+              @click="handleEdit(scope.$index, scope.row)"
+              disabled>编辑</el-button>
             <el-button
               size="mini"
               type="danger"
-              @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+              @click="handleDelete(scope.$index, scope.row)"
+              disabled>删除</el-button>
           </template>
         </el-table-column>
       </el-table> 
@@ -58,7 +60,7 @@
         
     <el-row>
       <el-col :span='2' :offset='1'>
-        <el-button type="warning" round @click='createVisible = true'>增加类别</el-button>
+        <el-button type="warning" round @click='createVisible = true' disabled>增加类别</el-button>
       </el-col>
     </el-row>
 
@@ -171,7 +173,10 @@ export default defineComponent({
     return {
       ...toRefs(state)
     }
-  }
+  },
+  // mounted(){
+  //   console.log(this.$router.options.history.state.back=='/welcome')
+  // }
 }) 
 
 </script>

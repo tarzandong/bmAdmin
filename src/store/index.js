@@ -10,20 +10,22 @@ const store = createStore({
     baseUrl:'http://203.135.96.136:8860/',
 
     menu:[
-      // {title:'首页',icon:'el-icon-s-home'},
+      {title:'首页',icon:'el-icon-s-home',path:'/welcome'},
       {
-        title:'商品管理',icon:'el-icon-sell',
+        title:'商品管理',icon:'el-icon-sell',extend:false,current:-1,
         children:[{title:'商品分类',path:'/category'},{title:'品牌管理',path:'/brand'},{title:'商品发布',path:'/commodity'}]
       },
       {
-        title:'客户订单',icon:'el-icon-s-order',
+        title:'客户订单',icon:'el-icon-s-order',extend:false,current:-1,
         children:[{title:'客户',path:'/customer'},{title:'订单',path:'/order'}]
       },
       {
-        title:'运维管理',icon:'el-icon-s-tools',
+        title:'运维管理',icon:'el-icon-s-tools',extend:false,current:-1,
         children:[{title:'运维人员',path:'/mantainer'},{title:'系统常量',path:'/const'}]
       },
     ],
+
+    transName:'ss',
 
     goodsType:['水泥','瓷砖','钢材'],
 
@@ -36,6 +38,15 @@ const store = createStore({
 
   },
   mutations: {
+    setTN(state,name){
+      state.transName=name
+    },
+    resetMenuItem(state){
+      state.menu.map((item)=>{
+        item.current=-1
+        return item
+      })
+    },
     shrinkMenu(state){
       state.menu.map((item)=>{
         item.extend=false

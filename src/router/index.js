@@ -9,7 +9,9 @@ import order from '/@/views/customerOrder/order.vue'
 import constValue from '/@/views/setting/constValue.vue'
 import mantainer from '/@/views/setting/mantainer.vue'
 import customer from '/@/views/customerOrder/customer.vue'
+import welcome from '/@/views/welcome/welcome.vue'
 import utils from '/@/utils/utils.js'
+import store from '/@/store/index.js'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -106,6 +108,16 @@ const router = createRouter({
           meta:{
             keepAlive:false
           },
+        },
+
+        {
+          path:'/welcome',
+          components:{
+            content: welcome
+          },
+          meta:{
+            keepAlive:false
+          },
         }
         
       ]
@@ -116,10 +128,12 @@ const router = createRouter({
 
 router.beforeEach((to,from,next)=>{
   console.log(to.path)
+  if (from.path=='/welcome' || to.path=='/welcome') store.commit('setTN','so')
+  else store.commit('setTN','ss')
   if (to.path=='/login'){
     // console.log(utils.lsAvailable)
     if (utils.lsAvailable()){
-      next('/home')
+      next('/welcome')
     }
     else next()
   }

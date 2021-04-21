@@ -25,3 +25,20 @@ export default {
   },
 }
 </script>
+
+
+<style>
+  @font-face {
+    font-family: cjs;
+    src: url('./assets/font/cjs.ttf');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: shs;
+    src: url('./assets/font/shs.ttf');
+    font-weight: normal;
+    font-style: normal;
+  }
+</style>

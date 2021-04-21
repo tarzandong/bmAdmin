@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="whitePage">
     <el-row>
       <el-col :span='6' class='mt' >
         <div class="contentTitle">客户列表</div>
@@ -47,7 +47,18 @@
     <div  v-else>
         <loading-view></loading-view>
     </div>
-        
+
+    <div class='mt'>
+      <el-pagination v-if='result'
+      @size-change="sizeChange"
+      @current-change="pageChange"
+      v-model:currentPage="result.pageIndex"
+      :page-sizes="[10, 20, 30, 40]"
+      :page-size="result.pageSize"
+        layout="total,prev, pager, next,sizes"
+        :total="result.sumCount">
+      </el-pagination>
+    </div>    
     
     
   </div> 

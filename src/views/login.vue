@@ -66,7 +66,7 @@
           data.account=body.value.account
           data.logTime=Date.now(),
           store.commit('login',data)
-          router.replace('/home').then(()=>{
+          router.replace('/welcome').then(()=>{
             ElMessage.success('登录成功')
           })
         })

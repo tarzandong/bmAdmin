@@ -15,6 +15,7 @@ export default function useCrus(){
     createBody:{},
     updateVisible:false,
     updateBody:{},
+    copy:{},
     body:{
       pageIndex:1,
       pageSize:10,
@@ -53,10 +54,10 @@ export default function useCrus(){
     })
   }
   const confirmEdit=()=>{
-    console.log(state.updateBody)
+    // console.log(state.updateBody)
     if (state.updateBody.password) {
       state.updateBody.password=md5(state.updateBody.password)
-      console.log(state.updateBody.password)
+      // console.log(state.updateBody.password)
     }
     nextTick(()=>{
       request.post(state.urls.u,state.updateBody).then(data=>{
@@ -69,6 +70,7 @@ export default function useCrus(){
   }
   const handleEdit=(i,item)=>{
     state.updateBody={...item}
+    state.copy={...item}
     state.updateVisible=true
     console.log(item)
   }
@@ -91,7 +93,7 @@ export default function useCrus(){
 
   const pageChange=(i)=>{
     state.body.pageIndex=i
-    console.log('changesize')
+    // console.log('changesize')
     getList()
   }
 

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="whitePage">
     <el-row >
       <el-col :span='6' class='mt' >
         <div class="contentTitle">商品发布管理</div>

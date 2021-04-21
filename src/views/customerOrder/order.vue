@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="whitePage">
     <el-row>
       <el-col :span='6' class='mt' >
         <div class="contentTitle">订单管理</div>
@@ -92,12 +92,10 @@
         <el-table-column
           prop='amount'
           label="总价"
-          align='center'
           width="90" >
         </el-table-column>
         <el-table-column
           label="客户"
-          align='center'
           width="180" >
           <template #default="scope">
             <span >{{scope.row.nickName+' '+scope.row.phone}}</span>
@@ -107,15 +105,18 @@
           prop='createTime'
           label="下单时间"
           align='center'>
-          
         </el-table-column>
-        
+        <el-table-column
+          prop='remark'
+          label="备注"
+          align='center'>
+        </el-table-column>
         <el-table-column label="订单状态" align='center'>
           <template #default="scope">
-            <span class='mr'>{{orderStatus[scope.row.orderState].label}}</span>
+            <span class='mr' style="white-space:pre;">{{orderStatus[scope.row.orderState].label}}</span>
             <el-button
               size="mini" type='warning'
-              @click="handleEdit(scope.$index, scope.row)" :disabled="scope.row.orderState==0 || scope.row.orderState>2">更改</el-button>
+              @click="handleEdit(scope.$index, scope.row)" :disabled="scope.row.orderState==0 || scope.row.orderState==3 ||scope.row.orderState==4">{{dialog1(scope.row.orderState).button}}</el-button>
           </template>
         </el-table-column>
       </el-table> 
@@ -145,20 +146,27 @@
     
 
     <el-dialog
-    title="更改状态"
+    :title="dialog1(copy.orderState).title"
     v-model="updateVisible"
     width="30%">
-      
-      <el-row type='flex' justify='center' align='middle' class='mt'>
-        <div class='mr'>更改状态为：</div>
+      <el-row type='flex' justify='center' align='middle' class='mt' v-if='dialog1(copy.orderState).state==0'>
+        <el-radio v-model="updateBody.orderState" :label='1' :key="'radio'+n">不同意</el-radio>
+        <el-radio v-model="updateBody.orderState" :label='3' :key="'radio'+n">同意</el-radio>
+      </el-row>
+      <el-row type='flex' justify='center' align='middle' class='mt' v-else>
         <el-radio v-for='n in 3' v-model="updateBody.orderState" :label="n+1" :key="'radio'+n">{{orderStatus[n+1].label}}</el-radio>
       </el-row>
+      <el-row type='flex' justify='center' align='middle' class='mt'>
+        <el-input placeholder="输入备注" v-model="updateBody.remark" style="width:300px;">
+          <template #prepend>备注：</template>
+        </el-input>
+      </el-row>
       <el-divider></el-divider>
-    <template #footer>
-      <span class="dialog-footer">
-        <el-button @click="updateVisible = false">取 消</el-button>
-        <el-button type="primary" @click="confirmEdit">确 定</el-button>
-      </span>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button @click="updateVisible = false">取 消</el-button>
+          <el-button type="primary" @click="confirmEdit">确 定</el-button>
+        </span>
       </template>
     </el-dialog>
 
@@ -218,11 +226,12 @@ export default defineComponent({
       listMap.typeList.push({'value':'','label':''})
     }) 
     const option=reactive({orderStatus:[
-      {value:0,label:'购物车'} ,
-      {value:1,label:'已下单'},
-      {value:2,label:'已发货'},
-      {value:3,label:'已取消'},
-      {value:4,label:'已完成'},
+      {value:0,label:'购物车   '} ,
+      {value:1,label:'已下单   '},
+      {value:2,label:'已发货   '},
+      {value:3,label:'已取消   '},
+      {value:4,label:'已完成   '},
+      {value:5,label:'申请取消'},
       {value:null,label:'未指定'}
     ],})
     state.urls.s='/build/admin/order/list'
@@ -232,13 +241,27 @@ export default defineComponent({
     state.body.zoneCode='86'
     state.getList()
     const orderState=({row, rowIndex})=>{
-      console.log(row.orderState)
-      if (row.orderState==1) return 'bgW'
+      // console.log(row.orderState)
+      if (row.orderState==1 || row.orderState==5) return 'bgW'
       if (row.orderState==3) return 'bgF'
       if (row.orderState==4) return 'bgS'
     }
+    const dialog1=(orderState)=>{
+      let temp={}
+      if (orderState==5) {
+        temp.state=0
+        temp.title='审核'
+        temp.button='审核'
+      }
+      else {
+        temp.state=1
+        temp.title='更改状态为：'
+        temp.button='更改'
+      }
+      return temp
+    }
     return {
-      ...toRefs(state),...toRefs(option),...toRefs(listMap),orderState
+      ...toRefs(state),...toRefs(option),...toRefs(listMap),orderState,dialog1
     }
   }
 }) 

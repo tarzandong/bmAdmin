@@ -11,12 +11,21 @@ $main-color:#d2d3c9;
 $title-color:#bb2205;
 
 // @font-face {
-//   font-family: “syht”;
-//   src: url('../font/SourceHanSansCN-Normal.tff');
+//   font-family: “cjs”;
+//   src: url('../font/cjs.tff') format('truetype');
 //   font-weight: normal;
 //   font-style: normal;
 // }
 
+.cjs{
+  font-family:cjs;
+  font-size:20px;
+}
+
+.shs{
+  font-family:shs;
+  
+}
 // #app{
 //   font-family:"syht";
 // }
@@ -121,7 +130,8 @@ input.el-input__inner {
 }
 
 .bgMain{
-  background:$main-color;
+  background:linear-gradient(to top left,lighten($main-color,10%),darken($main-color,10%));
+  position:relative;
   // display:block;
 }
 
@@ -154,13 +164,16 @@ input.el-input__inner {
 }
 
 .whitePage{
-  margin:auto;
-  margin-top:20px;
+  position:absolute;
+  left:30px;
+  // transform: scale(0.6);
+ 
+  top:20px;
   padding:20px 0;
   width:95%;
   min-height:300px;
   background:#fff;
-  box-shadow:5px 5px 15px rgba(0,0,0,0.3);
+  box-shadow:-5px -5px 15px rgba(0,0,0,0.3);
   color:#808080;
   border-radius:8px;
 }
@@ -197,4 +210,59 @@ input.el-input__inner {
 
 .el-table .bgF{
   background-color:lighten($--color-danger,20%);
+}
+
+.ss-enter-active,
+.ss-leave-active {
+  position: absolute;
+  transition: all 0.85s ease;
+}
+
+
+.ss-enter-from {
+  left: -100%;
+  transform:scale(0.6);
+}
+
+
+.ss-enter-to {
+  left: 30px;
+  transform: scale(1);
+}
+
+
+.ss-leave-from {
+  transform: scale(1);
+  opacity:1;
+}
+
+
+.ss-leave-to {
+  transform: scale(0.6);
+  opacity:0.3;
+}
+
+.so-enter-active,
+.so-leave-active {
+  transition: all 0.85s ease;
+}
+
+
+.so-enter-from {
+  opacity:0.3;
+}
+
+
+.so-enter-to {
+  opacity:1;
+}
+
+
+.so-leave-from {
+  opacity:1;
+}
+
+
+.so-leave-to {
+  opacity:0.3;
 }

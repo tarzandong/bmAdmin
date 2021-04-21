@@ -1,5 +1,5 @@
 <template>
-  <div class='textC'>
+  <div class='textC shs'>
     <div  @click="extendmenu" >
       <el-row class="mainbar"  :style="{'background-color': extend? 'rgba(255,255,255,0.2)':''}" type='flex' align='middle'>
         
@@ -35,7 +35,7 @@
     name:'menuitem',
     data(){
       return{
-        currentItem:0,  
+          
       }
     },
     props:{
@@ -45,7 +45,9 @@
       extend(){
         return this.prop.extend
       },
-      
+      currentItem(){
+        return this.prop.current
+      },
       title(){
         if (this.prop) {
           return this.prop.title
@@ -58,9 +60,14 @@
       extendmenu(){
         this.$store.commit('shrinkMenu')
         this.prop.extend=true
+        if (!this.prop.children) {
+          this.$store.commit('resetMenuItem')
+          this.$router.push(this.prop.path)
+        }
       },
       setCurr(i){
-        this.currentItem=i
+        this.$store.commit('resetMenuItem')
+        this.prop.current=i
         console.log(this.prop.children[i-1])
         this.$router.push(this.prop.children[i-1].path)
         // this.$router.push('/'+this.prop+'/'+this.children.path[i-1])

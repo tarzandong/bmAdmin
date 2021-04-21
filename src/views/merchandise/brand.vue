@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="whitePage">
     <el-row>
       <el-col :span='6' class='mt' >
         <div class="contentTitle">商品品牌列表</div>
@@ -47,6 +47,18 @@
         <el-button type="warning" round @click='createVisible = true'>增加品牌</el-button>
       </el-col>
     </el-row>
+
+    <div class='mt'>
+      <el-pagination v-if='result'
+      @size-change="sizeChange"
+      @current-change="pageChange"
+      v-model:currentPage="result.pageIndex"
+      :page-sizes="[10, 20, 30, 40]"
+      :page-size="result.pageSize"
+        layout="prev, pager, next,sizes"
+        :total="result.sumCount">
+      </el-pagination>
+    </div>
 
     <el-dialog
     title="增加品牌"
